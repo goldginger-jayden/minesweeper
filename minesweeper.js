@@ -6,60 +6,71 @@ var board = {
 			row: 0,
 			col: 0,
 			isMine: true,
+			isMarked: false,
 			hidden: true
 		},
 		{
 			row: 0,
 			col: 1,
 			isMine: false,
+			isMarked: false,
 			hidden: true
 		},
 		{
 			row: 0,
 			col: 2,
 			isMine: false,
+			isMarked: false,
 			hidden: true
 		},
 		{
 			row: 1,
 			col: 0,
 			isMine: false,
+			isMarked: false,
 			hidden: true
 		},
 		{
 			row: 1,
 			col: 1,
-			isMine: true,
+			isMine: false,
+			isMarked: false,
 			hidden: true
 		},
 		{
 			row: 1,
 			col: 2,
 			isMine: false,
+			isMarked: false,
 			hidden: true
 		},
 		{
 			row: 2,
 			col: 0,
 			isMine: false,
+			isMarked: false,
 			hidden: true
 		},
 		{
 			row: 2,
 			col: 1,
-			isMine: true,
+			isMine: false,
+			isMarked: false,
 			hidden: true
 		},
 		{
 			row: 2,
 			col: 2,
 			isMine: false,
+			isMarked: false,
 			hidden: true
 		}
 	]
 }
 
 function startGame() {
+	document.addEventListener('click', checkForWin)
+	document.addEventListener('contextmenu', checkForWin)
 	for (let i = 0; i < board.cells.length; i++) {
 		surroundingMines = countSurroundingMines(board.cells[i])
 	}
@@ -72,10 +83,17 @@ function startGame() {
 // 1. Are all of the cells that are NOT mines visible?
 // 2. Are all of the mines marked?
 function checkForWin() {
-
-	// You can use this function call to declare a winner (once you've
-	// detected that they've won, that is!)
-	//   lib.displayMessage('You win!')
+	for (let i = 0; i < board.cells.length; i++) {
+		var currentCell = board.cells[i]
+		if (currentCell.isMine && currentCell.isMarked) {
+			continue
+		} else if (currentCell.isMine && !currentCell.isMarked) {
+			return
+		} else if (currentCell.hidden) {
+			return
+		}
+	}
+	return lib.displayMessage('You win!')
 }
 
 // Define this function to count the number of mines around the cell
@@ -86,7 +104,7 @@ function checkForWin() {
 // It will return cell objects in an array. You should loop through 
 // them, counting the number of times `cell.isMine` is true.
 function countSurroundingMines(cell) {
-	var surroundingCells = getSurroundingCells(cell.row, cell.col)
+	var surroundingCells = lib.getSurroundingCells(cell.row, cell.col)
 	let count = 0
 	surroundingCells.forEach(element => {
 		if (element.isMine) {
