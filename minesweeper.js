@@ -5,8 +5,7 @@ var board = {
 	cells: [],
 }
 
-var size = 3
-createBoard(size)
+createBoard(4)
 
 function createBoard(size) {
 	for (rowNum = 0; rowNum < size; rowNum++) {
@@ -20,16 +19,18 @@ function createBoard(size) {
 			})
 		}
 	}
+	startGame
 }
 
 function startGame() {
-	document.addEventListener('click', checkForWin)
-	document.addEventListener('contextmenu', checkForWin)
 	for (let i = 0; i < board.cells.length; i++) {
 		surroundingMines = countSurroundingMines(board.cells[i])
 	}
 	// Don't remove this function call: it makes the game work!
 	lib.initBoard()
+	// Check for a win on click or right click
+	document.addEventListener('click', checkForWin)
+	document.addEventListener('contextmenu', checkForWin)
 }
 
 function checkForWin() {
@@ -43,7 +44,7 @@ function checkForWin() {
 			return
 		}
 	}
-	return lib.displayMessage('You win!')
+	return lib.displayMessage('You win! Play Again?');
 }
 
 function countSurroundingMines(cell) {
@@ -56,4 +57,3 @@ function countSurroundingMines(cell) {
 	});
 	return count
 }
-
