@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', startGame)
 
 // Define your `board` object here!
 var board = {
-	cells: [],
+	cells: []
 }
 
 createBoard(4)
@@ -13,7 +13,7 @@ function createBoard(size) {
 			board.cells.push({
 				row: rowNum,
 				col: colNum,
-				isMine: true,
+				isMine: Math.random() < 0.2,
 				isMarked: false,
 				hidden: true
 			})
@@ -24,7 +24,7 @@ function createBoard(size) {
 
 function startGame() {
 	for (let i = 0; i < board.cells.length; i++) {
-		surroundingMines = countSurroundingMines(board.cells[i])
+		board.cells[i].surroundingMines = countSurroundingMines(board.cells[i])
 	}
 	// Don't remove this function call: it makes the game work!
 	lib.initBoard()
@@ -56,4 +56,10 @@ function countSurroundingMines(cell) {
 		}
 	});
 	return count
+}
+
+//This won't play :(
+function rip() {
+	var audio = new Audio('./audio/BABABOOEY.mp3')
+	return audio.play()
 }
