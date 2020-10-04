@@ -58,7 +58,6 @@ function countSurroundingMines(cell) {
 	return count
 }
 
-//This won't play :(
 function rip() {
 	var audio = new Audio('./audio/BABABOOEY.mp3')
 	return audio.play()
